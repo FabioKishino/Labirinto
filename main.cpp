@@ -26,7 +26,7 @@ int main()
         // -1 Caminho percorrido sem saida valida
 
         9,1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
-        9,0,0,0,0,0,9,0,0,0,0,0,9,0,0,0,0,0,9,0,9,
+        9,0,0,2,0,0,9,0,0,0,0,0,9,0,0,0,0,0,9,0,9,
         9,9,0,9,9,0,9,9,9,9,9,0,9,0,9,0,9,0,0,0,9,
         9,0,0,0,9,0,0,0,0,0,0,0,9,9,9,9,9,9,9,0,9,
         9,0,9,0,9,0,9,9,9,9,9,9,9,0,0,0,9,0,0,0,9,
@@ -44,7 +44,7 @@ int main()
         9,0,9,0,0,0,9,0,9,0,0,0,9,0,0,0,9,0,0,0,9,
         9,0,9,9,9,0,9,9,9,9,9,9,9,9,9,0,9,9,9,0,9,
         9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,9,
-        9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,2,9
+        9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9
     };
 
     std::stack<Coordenadas> caminho;
@@ -58,57 +58,52 @@ int main()
 
     do
     {
+
         std::cout << std::endl << "-->  Labirinto  <--" << std::endl << std::endl;
         std::cout << "(1) Inciar" << std::endl;
         std::cout << "(2) Sair" << std::endl << std::endl;
         std::cout << "Escolha uma opcao: " << std::endl;
         std::cin >> op;
-        // op = getch();
 
         switch (op) {
-        case 1:{
-            // Se encontrou = false:
-            if (!encontrou) {
-                // Faça enquanto encontrou = false:
-                do {
-                    system("cls");
-                    std::cout << "Saida nao encontrada." << std::endl;
-                    // Retorna encontrou = true se achar a saida
-                    bool encontrou = resolveLabirinto(labirinto, caminho);
-                } while (encontrou);
+            case 1:{
                 if (!encontrou) {
-                    printLabirinto(labirinto);
-                    std::cout << std::endl << std::endl<< "Saida encontrada\n\n";
-                    system("pause");
+                    do {
+
+                        bool encontrou = resolveLabirinto(labirinto, caminho);
+
+                    } while (encontrou);
+                    if (!encontrou) {
+                        printLabirinto(labirinto);
+                        std::cout << std::endl << std::endl<< "Saida encontrada\n\n";
+                        system("pause");
+                        break;
+                    }
+                }
+                else {
+                    std::cout << "Labirinto ja resolvido" << std::endl;
                     break;
-                break;
                 }
             }
-            else {
-                std::cout << "Labirinto ja resolvido" << std::endl;
+
+            case 2:{
+                system("cls");
+                std::cout << "Saindo..." << std::endl;
                 break;
             }
-            break;
-        }
 
-        case 2:{
-            system("cls");
-            std::cout << "Saindo..." << std::endl;
-            break;
+            default: {
+                system("cls");
+                std::cout << "Opcao invalida" << std::endl;
+            }
         }
-
-        default: {
-            system("cls");
-            std::cout << "Opcao invalida" << std::endl;
-        }
-        }
-    } while ((op != 2) || (!encontrou));
+    } while ((op != 2) || (encontrou));
+    return 0;
 }
 
 void printLabirinto(int labirinto[20][21])
 {
     system("cls");
-
     int linha, coluna;
 
     for (linha = 0; linha < 20; linha++) {
